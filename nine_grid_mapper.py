@@ -93,11 +93,11 @@ class NineGridMapper:
             hashed_key < 0:
             return None
         # create binary version of number (prefilled to a length of 28 chars)
-        binary = bin(hashed_key)[2:].zfill(28)
-        last_index = len(binary) - 1
+        # note it is reversed to preserve order of index from lowest to highest
+        r_binary = bin(hashed_key)[2:].zfill(28)[::-1]
         result = []
-        for x in xrange(len(binary)):
-            if binary[last_index - x] is '1':
+        for x in xrange(len(r_binary)):
+            if r_binary[x] is '1':
                 results.append(self.grid[x])
         return result
     
