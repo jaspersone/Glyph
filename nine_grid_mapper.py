@@ -4,8 +4,8 @@ import sys
 import os
 import pprint
 
-class NineGridMapper(object):
-    def NineGridMapper():
+class NineGridMapper:
+    def __init__(self):
         ''' Setups up a mapping of key values to our internal
             numbering system as shown in the following grid.
             
@@ -61,7 +61,7 @@ class NineGridMapper(object):
                     (8,9),
                     ]
 
-    def encode_hash(pairs):
+    def encode_hash(self, pairs):
         ''' A basic function that encodes a list of vertex pairs
             into a unique hash.
             
@@ -79,7 +79,7 @@ class NineGridMapper(object):
         except Exception as e:
             return None
     
-    def decode_hash(hashed_key):
+    def decode_hash(self, hashed_key):
         ''' returns an list of edges described as (V1,V2)'''
         if type(hashed_key) is not int or hashed_key > self.max_hash:
             return None
