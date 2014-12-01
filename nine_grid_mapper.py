@@ -62,12 +62,14 @@ class NineGridMapper:
                     ]
 
     def encode_hash(self, pairs):
-        ''' A basic function that encodes a list of vertex pairs
-            into a unique hash.
+        ''' A basic function that hashes a list of vertex pairs
+            into a unique integer.
             
             The basic algorithm is takes a given list of vertices (keys)
-            and assigns each pair a power of two. Since vertices must be
-            unqiue.
+            and assigns each pair a power of two.
+            
+            return: a unique integer which represents the state of the
+                    nine dot grid that the user has passed to encode_hash
         '''
         # ensures no duplicate vertex pairs
         keys = list(set(pairs))
@@ -77,11 +79,20 @@ class NineGridMapper:
                 hashed_result += 2 ** self.grid.index(key)
             return hashed_result
         except Exception as e:
+            ''' if an exception is thrown, it is likely due to the fact
+                that a key of vertex pairs that was passed to encode_hash
+                does not exist inside of self.grid.
+            '''
+            print e
             return None
     
     def decode_hash(self, hashed_key):
-        ''' returns an list of edges described as (V1,V2)'''
-        if type(hashed_key) is not int or hashed_key > self.max_hash:
+        ''' params: hashed_key is an integer between 0 and self.max_hash
+            return: an list of edges described as (V1,V2)
+        '''
+        if type(hashed_key) is not int or 
+            hashed_key > self.max_hash or
+            hashed_key < 0:
             return None
         # create binary version of number (prefilled to a length of 28 chars)
         binary = bin(hashed_key)[2:].zfill(28)
@@ -97,7 +108,7 @@ def main():
     pprint.pprint(my_mapper.grid)
 
 def test():
-    # TODO: write some tests here
+    # TODO: call tests here
     print 'Running tests.'
 
 if __name__ == '__main__':
