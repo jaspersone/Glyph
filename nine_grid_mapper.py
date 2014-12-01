@@ -2,7 +2,7 @@
 # encoding: utf-8
 import sys
 import os
-
+import pprint
 
 class NineGridMapper(object):
     def NineGridMapper():
@@ -48,16 +48,18 @@ class NineGridMapper(object):
               |
             9 | x   x   x   x   x   x   x   x   x
         '''
-        self.ninegrid = [
-                        (1,2), (1,4), (1,5), (1,6), (1,8),
-                        (2,3), (2,4), (2,5), (2,6), (2,7), (2,9),
-                        (3,4), (3,5), (3,6), (3,8),
-                        (4,5), (4,7), (4,8), (4,9),
-                        (5,6), (5,7), (5,8), (5,9),
-                        (6,7), (6,8), (6,9),
-                        (7,8),
-                        (8,9),
-                        ]
+        # max_hash = 2^0 + 2^1 + 2^2 + ... 2^27
+        self.max_hash = 268435455
+        self.grid = [
+                    (1,2), (1,4), (1,5), (1,6), (1,8),
+                    (2,3), (2,4), (2,5), (2,6), (2,7), (2,9),
+                    (3,4), (3,5), (3,6), (3,8),
+                    (4,5), (4,7), (4,8), (4,9),
+                    (5,6), (5,7), (5,8), (5,9),
+                    (6,7), (6,8), (6,9),
+                    (7,8),
+                    (8,9),
+                    ]
 
     def encode_hash(pairs):
         ''' A basic function that encodes a list of vertex pairs
@@ -72,14 +74,14 @@ class NineGridMapper(object):
         hashed_result = 0
         try:
             for key in keys:
-                hashed_result += 2 ** self.ninegrid.index(key)
+                hashed_result += 2 ** self.grid.index(key)
             return hashed_result
         except Exception as e:
             return None
     
     def decode_hash(hashed_key):
         ''' returns an list of edges described as (V1,V2)'''
-        if type(hashed_key) is not int:
+        if type(hashed_key) is not int or hashed_key > self.max_hash:
             return None
         # create binary version of number (prefilled to a length of 28 chars)
         binary = bin(hashed_key)[2:].zfill(28)
@@ -87,12 +89,12 @@ class NineGridMapper(object):
         result = []
         for x in xrange(len(binary)):
             if binary[last_index - x] is '1':
-                results.append(self.ninegrid[x])
+                results.append(self.grid[x])
         return result
     
 def main():
-    pass
-
+    my_mapper = NineGridMapper()
+    pprint.pprint(my_mapper.grid)
 
 if __name__ == '__main__':
     main()
