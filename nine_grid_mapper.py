@@ -74,17 +74,17 @@ class NineGridMapper:
         # ensures no duplicate vertex pairs
         keys = list(set(pairs))
         hashed_result = 0
-        try:
-            for key in keys:
+        for key in keys:
+            try:
                 hashed_result += 2 ** self.grid.index(key)
-            return hashed_result
-        except Exception as e:
-            ''' if an exception is thrown, it is likely due to the fact
-                that a key of vertex pairs that was passed to encode_hash
-                does not exist inside of self.grid.
-            '''
-            print e
-            return None
+            except Exception as e:
+                ''' if an exception is thrown, it is likely due to the fact
+                    that a key of vertex pairs that was passed to encode_hash
+                    does not exist inside of self.grid.
+                '''
+                print e
+                return None
+        return hashed_result
     
     def decode_hash(self, hashed_key):
         ''' params: hashed_key is an integer between 0 and self.max_hash
