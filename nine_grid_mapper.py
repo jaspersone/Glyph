@@ -96,5 +96,12 @@ def main():
     my_mapper = NineGridMapper()
     pprint.pprint(my_mapper.grid)
 
+def test():
+    # TODO: write some tests here
+    print 'Running tests.'
+
 if __name__ == '__main__':
-    main()
+    if len(sys.argv) > 1:
+        test()
+    else:
+        main()
