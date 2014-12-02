@@ -97,7 +97,7 @@ class NineGridMapper:
         result = []
         for x in xrange(len(r_binary)):
             if r_binary[x] is '1':
-                results.append(self.grid[x])
+                result.append(self.grid[x])
         return result
     
 def main():

@@ -49,9 +49,51 @@ class nine_grid_mapper_tests(unittest.TestCase):
         encoded_hash = self.grid.encode_hash(pairs)
         self.assertEqual(encoded_hash, 268435455)    
 
+    def test_decode_hash_is_0(self):
+        hashed_key = 0
+        pairs = self.grid.decode_hash(hashed_key)
+        self.assertEqual(len(pairs), 0)
+
+    def test_decode_hash_is_1(self):
+        hashed_key = 1
+        pairs = self.grid.decode_hash(hashed_key)
+        self.assertEqual(pairs, [(1,2)])
+
+    def test_decode_hash_is_3(self):
+        hashed_key = 3
+        pairs = self.grid.decode_hash(hashed_key)
+        self.assertEqual(pairs, [(1,2),(1,4)])
+    
+    def test_decode_hash_is_268435455(self):
+        hashed_key = 268435455
+        expected = [
+                (1,2), (1,4), (1,5), (1,6), (1,8),
+                (2,3), (2,4), (2,5), (2,6), (2,7), (2,9),
+                (3,4), (3,5), (3,6), (3,8),
+                (4,5), (4,7), (4,8), (4,9),
+                (5,6), (5,7), (5,8), (5,9),
+                (6,7), (6,8), (6,9),
+                (7,8),
+                (8,9),
+                ] 
+        pairs = self.grid.decode_hash(hashed_key)
+        self.assertEqual(pairs, expected)
+    
+    def test_decode_illegal_hash_low(self):
+        hashed_key = -1
+        pairs = self.grid.decode_hash(hashed_key)
+        self.assertEqual(pairs, None)
+
+    def test_decode_illegal_hash_high(self):
+        hashed_key = 268435456
+        pairs = self.grid.decode_hash(hashed_key)
+        self.assertEqual(pairs, None)
+
+    ''' DO NOT run this test, unless you want your machine to run out of memory
     def test_encode_no_hash_collisions(self):
         # for all possible grids that can be created, no two should have
         # the same hash
+        # NOTE: this is a long running test, really long running!
         pairs = [
                 (1,2), (1,4), (1,5), (1,6), (1,8),
                 (2,3), (2,4), (2,5), (2,6), (2,7), (2,9),
@@ -63,35 +105,20 @@ class nine_grid_mapper_tests(unittest.TestCase):
                 (8,9),
                 ]
         all_grids = []
+        
+        import datetime
         print '\n'
         for i in xrange(1, len(pairs)+1):
-            print 'Combination round %d of %d' % (i, len(pairs))
+            start = datetime.datetime.now()
             grid = [list(x) for x in itertools.combinations(pairs, i)]
             all_grids.extend(grid)
+            end = datetime.datetime.now()
+            print 'Combinations round %d of %d ran in %f secs.' % (i, len(pairs), (end - start).total_seconds())
+
         hashes = []
         for grid in all_grids:
             hashes.append(self.grid.encode_hash(grid))
         self.assertEqual(len(hashes), len(set([tuple(h) for h in hashes])))
-
-    ''' Example Tests
-    def test_shuffle(self):
-        # make sure the shuffled sequence does not lose any elements
-        random.shuffle(self.seq)
-        self.seq.sort()
-        self.assertEqual(self.seq, range(10))
-
-        # should raise an exception for an immutable sequence
-        self.assertRaises(TypeError, random.shuffle, (1,2,3))
-
-    def test_choice(self):
-        element = random.choice(self.seq)
-        self.assertTrue(element in self.seq)
-
-    def test_sample(self):
-        with self.assertRaises(ValueError):
-            random.sample(self.seq, 20)
-        for element in random.sample(self.seq, 5):
-            self.assertTrue(element in self.seq)
     '''
 
 if __name__ == '__main__':
