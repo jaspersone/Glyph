@@ -81,7 +81,6 @@ class NineGridMapper:
                 that a key of vertex pairs that was passed to encode_hash
                 does not exist inside of self.grid.
             '''
-            print e
             return None
     
     def decode_hash(self, hashed_key):
