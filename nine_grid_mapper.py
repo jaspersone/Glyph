@@ -88,8 +88,8 @@ class NineGridMapper:
         ''' params: hashed_key is an integer between 0 and self.max_hash
             return: an list of edges described as (V1,V2)
         '''
-        if type(hashed_key) is not int or 
-            hashed_key > self.max_hash or
+        if type(hashed_key) is not int or \
+            hashed_key > self.max_hash or \
             hashed_key < 0:
             return None
         # create binary version of number (prefilled to a length of 28 chars)
