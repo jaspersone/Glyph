@@ -47,7 +47,7 @@ class nine_grid_mapper_tests(unittest.TestCase):
                 (8,9),
                 ]            
         encoded_hash = self.grid.encode_hash(pairs)
-        self.assertEqual(encoded_hash, 268435455)    
+        self.assertEqual(encoded_hash, self.grid.max_hash)    
 
     def test_decode_hash_is_0(self):
         hashed_key = 0
