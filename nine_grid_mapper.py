@@ -128,8 +128,8 @@ class NineGridMapper:
             unique nodes, then returns the symmetric difference
             from the two sets of flattened nodes.
         '''
-        l_flattened = set([x for y in left_pairs for x in y])
-        r_flattened = set([x for y in right_pairs for x in y])
+        l_flattened = set([elem for pair in left_pairs for elem in pair])
+        r_flattened = set([elem for pair in right_pairs for elem in pair])
         return len(l_flattened.symmetric_difference(r_flattened))
         
 
