@@ -49,8 +49,8 @@ import pprint
 
 class NineGridMapper:
     def __init__(self):
-        # max_hash = 2^0 + 2^1 + 2^2 + ... 2^27
-        self.max_hash = 268435455
+        # max_hash == 2^0 + 2^1 + 2^2 + ... 2^27 == (2^28 - 1)
+        self.max_hash = 2 ** 28 - 1 # 268435455
         self.grid = [
                     (1,2), (1,4), (1,5), (1,6), (1,8),
                     (2,3), (2,4), (2,5), (2,6), (2,7), (2,9),
@@ -93,8 +93,9 @@ class NineGridMapper:
             return None
         
         result = []
-        # Right shift to check if right most is 0 or 1
         shifted_num = hashed_key
+        
+        # Right shift to check if right most is 0 or 1
         for x in xrange(len(self.grid)):
             if shifted_num & 1 == 1:
                 result.append(self.grid[x])
