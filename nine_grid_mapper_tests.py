@@ -85,7 +85,7 @@ class nine_grid_mapper_tests(unittest.TestCase):
         self.assertEqual(pairs, None)
 
     def test_decode_illegal_hash_high(self):
-        hashed_key = 268435456
+        hashed_key = 268435456 # == 2^28 (one larger than max hash)
         pairs = self.grid.decode_hash(hashed_key)
         self.assertEqual(pairs, None)
 
