@@ -121,8 +121,88 @@ class nine_grid_mapper_tests(unittest.TestCase):
             hashes.append(self.grid.encode_hash(grid))
         self.assertEqual(len(hashes), len(set([tuple(h) for h in hashes])))
     '''
-    
+
+    def test_hamming_distance_same_pairs(self):
+        l_pairs = [(1,2), (1,4), (1,5), (1,6), (1,8)]
+        r_pairs = [(1,2), (1,4), (1,5), (1,6), (1,8)]
+        actual = self.grid.hamming_distance(l_pairs, r_pairs)
+        expected = 0
+        self.assertEqual(actual, expected)
+
+    def test_hamming_distance_same_pairs_different_order(self):
+        l_pairs = [(1,2), (1,4), (1,5), (1,6), (1,8)]
+        r_pairs = [(1,8), (1,2), (1,4), (1,5), (1,6)]
+        actual = self.grid.hamming_distance(l_pairs, r_pairs)
+        expected = 0
+        self.assertEqual(actual, expected)
+
+    def test_hamming_distance_different_pairs(self):
+        l_pairs = [(1,2), (1,4), (1,5), (1,6), (1,8)]
+        r_pairs = [(1,2), (1,4), (1,5), (1,6)]
+        actual = self.grid.hamming_distance(l_pairs, r_pairs)
+        expected = 1
+        self.assertEqual(actual, expected)
+
+    def test_hamming_distance_different_pairs_short(self):
+        l_pairs = [(1,2), (1,4)]
+        r_pairs = [(1,5), (1,6)]
+        actual = self.grid.hamming_distance(l_pairs, r_pairs)
+        expected = 4
+        self.assertEqual(actual, expected)
+
+    def test_hamming_distance_max_difference(self):
+        l_pairs = []
+        r_pairs = [ (1,2), (1,4), (1,5), (1,6), (1,8),
+                    (2,3), (2,4), (2,5), (2,6), (2,7), (2,9),
+                    (3,4), (3,5), (3,6), (3,8),
+                    (4,5), (4,7), (4,8), (4,9),
+                    (5,6), (5,7), (5,8), (5,9),
+                    (6,7), (6,8), (6,9),
+                    (7,8),
+                    (8,9)]
+        actual = self.grid.hamming_distance(l_pairs, r_pairs)
+        expected = 28
+        self.assertEqual(actual, expected)
+
+    def test_edge_count_difference_same_count(self):
+        l_pairs = [(1,2), (1,4), (1,5), (1,6), (1,8)]
+        r_pairs = [(1,2), (1,4), (1,5), (1,6), (1,8)]
+        actual = self.grid.edge_count_difference(l_pairs, r_pairs)
+        expected = 0
+        self.assertEqual(actual, expected)
+
+    def test_edge_count_difference_same_count_different_edges(self):
+        l_pairs = [(1,2), (1,4)]
+        r_pairs = [(1,6), (1,8)]
+        actual = self.grid.edge_count_difference(l_pairs, r_pairs)
+        expected = 0
+        self.assertEqual(actual, expected)
+
+    def test_edge_count_difference_different_count(self):
+        l_pairs = [(1,2)]
+        r_pairs = [(1,2), (1,4), (1,5), (1,6), (1,8)]
+        actual = self.grid.edge_count_difference(l_pairs, r_pairs)
+        expected = 4
+        self.assertEqual(actual, expected)
+
+    def test_node_difference(self):
+        l_pairs = [(1,2)]
+        r_pairs = [(1,2), (1,4), (1,5), (1,6), (1,8)]
+        actual = self.grid.node_difference(l_pairs, r_pairs)
+        expected = 4
+        self.assertEqual(actual, expected)
+
+    def test_node_difference_empty_list(self):
+        l_pairs = []
+        r_pairs = [(1,2), (1,4), (1,5), (1,6), (1,8)]
+        actual = self.grid.node_difference(l_pairs, r_pairs)
+        expected = 6
+        self.assertEqual(actual, expected)
+
+
     def test_generate_oracle(self):
+        ''' generates an oracle file that contains lines of 
+        '''
         filename_out = 'oracle.txt'
         pairs = [
                 (1,2), (1,4), (1,5), (1,6), (1,8),

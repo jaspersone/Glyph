@@ -109,8 +109,8 @@ class NineGridMapper:
             different. The sum of the 1's is equal to the hamming
             distance.
         '''
-        l_hash = encode_hash(left_pairs)
-        r_hash = encode_hash(right_pairs)
+        l_hash = self.encode_hash(left_pairs)
+        r_hash = self.encode_hash(right_pairs)
         return bin(l_hash ^ r_hash).count('1')
     
     def edge_count_difference(self, left_pairs, right_pairs):
