@@ -120,6 +120,12 @@ class nine_grid_mapper_tests(unittest.TestCase):
             hashes.append(self.grid.encode_hash(grid))
         self.assertEqual(len(hashes), len(set([tuple(h) for h in hashes])))
     '''
+    
+    def test_oracle_encode(self):
+        pass
+    
+    def test_oracle_decode(self):
+        pass
 
 if __name__ == '__main__':
     unittest.main()
