@@ -100,8 +100,18 @@ class NineGridMapper:
             if shifted_num & 1 == 1:
                 result.append(self.grid[x])
             shifted_num = shifted_num >> 1
-        
         return result
+
+    def hamming_distance(self, left_pairs, right_pairs):
+        ''' Returns the hamming distance between the two pairs by
+            comparing the pairs' hashes using XOR operation. This
+            will return 1 in places where the two numbers are
+            different. The sum of the 1's is equal to the hamming
+            distance.
+        '''
+        l_hash = encode_hash(left_pairs)
+        r_hash = encode_hash(right_pairs)
+        return bin(l_hash ^ r_hash).count('1')
     
 def main():
     my_mapper = NineGridMapper()
