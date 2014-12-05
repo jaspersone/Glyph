@@ -199,7 +199,6 @@ class nine_grid_mapper_tests(unittest.TestCase):
         expected = 6
         self.assertEqual(actual, expected)
 
-
     def test_generate_oracle(self):
         ''' generates an oracle file that contains lines of 
         '''

@@ -120,12 +120,12 @@ class NineGridMapper:
         return abs(len(left_pairs) - len(right_pairs))
 
     def node_difference(self, left_pairs, right_pairs):
-        ''' Returns the symmetric difference between the two sets
-            of pairs by first extracting all the nodes from
-            each list of pairs.
+        ''' Returns the symmetric difference of nodes between the
+            two sets of pairs by first extracting all the nodes
+            from each list of pairs.
 
             The first step flattens each list of pairs to get
-            unqiue nodes, then returns the symmetric difference
+            unique nodes, then returns the symmetric difference
             from the two sets of flattened nodes.
         '''
         l_flattened = set([x for y in left_pairs for x in y])
