@@ -2,6 +2,7 @@
 # encoding: utf-8
 import itertools
 import unittest
+import pprint
 from nine_grid_mapper import NineGridMapper
 
 class nine_grid_mapper_tests(unittest.TestCase):
@@ -121,11 +122,37 @@ class nine_grid_mapper_tests(unittest.TestCase):
         self.assertEqual(len(hashes), len(set([tuple(h) for h in hashes])))
     '''
     
-    def test_oracle_encode(self):
-        pass
-    
-    def test_oracle_decode(self):
-        pass
+    def test_generate_oracle(self):
+        filename_out = 'oracle.txt'
+        pairs = [
+                (1,2), (1,4), (1,5), (1,6), (1,8),
+                (2,3), (2,4), (2,5), (2,6), (2,7), (2,9),
+                (3,4), (3,5), (3,6), (3,8),
+                (4,5), (4,7), (4,8), (4,9),
+                (5,6), (5,7), (5,8), (5,9),
+                (6,7), (6,8), (6,9),
+                (7,8),
+                (8,9),
+                ]
+        all_grids = []
+        
+        import datetime
+        print '\n'
+        for i in xrange(1, 8):
+            start = datetime.datetime.now()
+            grid = [list(x) for x in itertools.combinations(pairs, i)]
+            all_grids.extend(grid)
+            end = datetime.datetime.now()
+            print 'Generate oracle round %d of %d ran in %f secs.' % (i, len(pairs), (end - start).total_seconds())
+        print 'Processing %d grids...' % len(all_grids)
+        
+        with open(filename_out, 'w') as f:
+            for line in all_grids:
+                f.write(self.convert_to_csv_line(line))
+                f.write('%d\n' % self.grid.encode_hash(line))
+        
+    def convert_to_csv_line(self, line):
+        return '%s\n' % (','.join(['%d%d' % x for x in line]))
 
 if __name__ == '__main__':
     unittest.main()
