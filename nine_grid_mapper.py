@@ -114,6 +114,9 @@ class NineGridMapper:
         return bin(l_hash ^ r_hash).count('1')
     
     def edge_count_difference(self, left_pairs, right_pairs):
+        ''' Returns the difference in number of edges each
+            set of pairs contains.
+        '''
         return abs(len(left_pairs) - len(right_pairs))
 
     def node_difference(self, left_pairs, right_pairs):
