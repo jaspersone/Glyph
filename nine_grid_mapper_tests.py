@@ -138,7 +138,7 @@ class nine_grid_mapper_tests(unittest.TestCase):
         
         import datetime
         print '\n'
-        for i in xrange(1, 8):
+        for i in xrange(1, 5):
             start = datetime.datetime.now()
             grid = [list(x) for x in itertools.combinations(pairs, i)]
             all_grids.extend(grid)
