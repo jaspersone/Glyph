@@ -113,6 +113,23 @@ class NineGridMapper:
         r_hash = encode_hash(right_pairs)
         return bin(l_hash ^ r_hash).count('1')
     
+    def edge_count_difference(self, left_pairs, right_pairs):
+        return abs(len(left_pairs) - len(right_pairs))
+
+    def node_difference(self, left_pairs, right_pairs):
+        ''' Returns the symmetric difference between the two sets
+            of pairs by first extracting all the nodes from
+            each list of pairs.
+
+            The first step flattens each list of pairs to get
+            unqiue nodes, then returns the symmetric difference
+            from the two sets of flattened nodes.
+        '''
+        l_flattened = set([x for y in left_pairs for x in y])
+        r_flattened = set([x for y in right_pairs for x in y])
+        return len(l_flattened.symmetric_difference(r_flattened))
+        
+
 def main():
     my_mapper = NineGridMapper()
     # nothing going on here
