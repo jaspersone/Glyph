@@ -6,14 +6,14 @@ import pprint
 
 ''' Setups up a mapping of key values to our internal
     numbering system as shown in the following grid.
-    
+
     The grid is a nine dotted grid, where the verticies
     are label as numbers from 1 - 9:
-    
+
     1 2 3
     4 5 6
     7 8 9
-    
+
     The below shows potential edges that can be formed
     between verticies. Please note the basic rules:
         1. There exist no edge that connects a vertex
@@ -24,14 +24,14 @@ import pprint
            the end of the line, where the start number
            is strictly less than the ending number.
         4. x's represent keys that are not valid
-    
+
     Table of Indexes based upon vertex pairs
         1   2   3   4   5   6   7   8   9
        ___________________________________
     1 | x   0   x   1   2   3   x   4   x
-      |     
+      |
     2 | x   x   5   6   7   8   9   x   10
-      |         
+      |
     3 | x   x   x   11  12  13  x   14  x
       |
     4 | x   x   x   x   15  x   16  17  18
@@ -65,10 +65,10 @@ class NineGridMapper:
     def encode_hash(self, pairs):
         ''' A basic function that hashes a list of vertex pairs
             into a unique integer.
-            
+
             The basic algorithm is takes a given list of vertices (keys)
             and assigns each pair a power of two.
-            
+
             return: a unique integer which represents the state of the
                     nine dot grid that the user has passed to encode_hash
         '''
@@ -82,7 +82,7 @@ class NineGridMapper:
                 does not exist inside of self.grid.
             '''
             return None
-    
+
     def decode_hash(self, hashed_key):
         ''' params: hashed_key is an integer between 0 and self.max_hash
             return: an list of edges described as (V1,V2)
@@ -91,10 +91,10 @@ class NineGridMapper:
             hashed_key > self.max_hash or \
             hashed_key < 0:
             return None
-        
+
         result = []
         shifted_num = hashed_key
-        
+
         # Right shift to check if right most is 0 or 1
         for x in xrange(len(self.grid)):
             if shifted_num & 1 == 1:
@@ -112,7 +112,7 @@ class NineGridMapper:
         l_hash = self.encode_hash(left_pairs)
         r_hash = self.encode_hash(right_pairs)
         return bin(l_hash ^ r_hash).count('1')
-    
+
     def edge_count_difference(self, left_pairs, right_pairs):
         ''' Returns the difference in number of edges each
             set of pairs contains.
@@ -131,7 +131,7 @@ class NineGridMapper:
         l_flattened = set([elem for pair in left_pairs for elem in pair])
         r_flattened = set([elem for pair in right_pairs for elem in pair])
         return len(l_flattened.symmetric_difference(r_flattened))
-        
+
 
 def main():
     my_mapper = NineGridMapper()
